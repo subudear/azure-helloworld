@@ -4,7 +4,7 @@ trigger:
 pool:
    vmImage: 'Ubuntu 16.04'
 
-#container: mcr.microsoft.com/vscode/devcontainers/go:1.16
+container: mcr.microsoft.com/vscode/devcontainers/go:1.16
 
 steps: 
 - task: CmdLine@2
