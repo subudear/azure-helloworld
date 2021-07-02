@@ -4,10 +4,14 @@ trigger:
 pool:
    vmImage: 'ubuntu-latest'
 
+container: mcr.microsoft.com/azuredocs/go:latest
+
 steps: 
-- task: GoTool@0
+
+- task: CopyFiles@2
   inputs:
-    version: '1.13.5'
+    Contents: '**'
+    TargetFolder: '$(System.DefaultWorkingDirectory)'
 - task: Go@0
   inputs:
     command: 'get'
