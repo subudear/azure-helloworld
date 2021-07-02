@@ -7,7 +7,13 @@ pool:
 #container: mcr.microsoft.com/vscode/devcontainers/go:1.16
 
 steps: 
-
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo inside container
+      
+      echo Hello world
+      echo "$(cat /etc/os-release)"
 - task: Go@0
   inputs:
     command: 'get'
