@@ -8,10 +8,6 @@ container: mcr.microsoft.com/vscode/devcontainers/go:1.16
 
 steps: 
 
-- task: CopyFiles@2
-  inputs:
-    Contents: '**'
-    TargetFolder: '$(System.DefaultWorkingDirectory)'
 - task: Go@0
   inputs:
     command: 'get'
