@@ -50,7 +50,8 @@ jobs:
     displayName: Build docker image
     inputs:
       repository: $(DOCKER_REPOSITORY)
+      buildContext: $(Build.SourcesDirectory)
       command: buildAndPush
-      Dockerfile: '$(System.DefaultWorkingDirectory)\Dockerfile'
+      Dockerfile: 'Dockerfile'
       tags: '$(Build.BuildNumber)'
       
