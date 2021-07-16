@@ -50,10 +50,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
       AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-  - task: DownloadPipelineArtifact@1
-    inputs:
-      artifactName: 'MyProject'
-      targetPath: '$(System.DefaultWorkingDirectory)'
+
   - task: Docker@2
     displayName: Build docker image
     inputs:
