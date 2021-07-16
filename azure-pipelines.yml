@@ -37,6 +37,12 @@ steps:
   inputs:
      artifactName: drop
 
+- task: UsePythonVersion@0
+  displayName: 'Use Python 3.6'
+  inputs:
+    versionSpec: '3.6'
+- script: pip install awscli
+  displayName: 'Install awscli'
 
 - script: |
     aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
