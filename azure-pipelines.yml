@@ -36,7 +36,7 @@ jobs:
     inputs:
        artifactName: drop
 - job: Package
-  dependsOn: BuildAndTest
+  dependsOn: Build
   condition: succeeded()
 
   pool:
