@@ -37,11 +37,13 @@ steps:
   inputs:
      artifactName: drop
 
-- task: UsePythonVersion@0
-  displayName: 'Use Python 3.6'
-  inputs:
-    versionSpec: '3.6'
-- script: python -m pip install awscli
+- script: |
+    apt-get update
+    apt-get install -y python3
+    apt-get install -y python3-pip
+    apt-get install -y python3-setuptools
+    pip3 install --upgrade pip
+    pip3 --no-cache-dir install --upgrade awscli
   displayName: 'Install awscli'
 
 - script: |
