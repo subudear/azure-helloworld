@@ -11,22 +11,24 @@ jobs:
   steps:
   - task: GoTool@0
     inputs:
-      version: '1.10'
+      version: '1.13.5'
   - task: Go@0
     inputs:
       command: 'get'
       arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
   - task: Go@0
     inputs:
       command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)'
-      Contents: 'deployment.xml'
+	    Contents: 'deployment.xml'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
     inputs:
        artifactName: drop
+
 - job: Package
   dependsOn: Build
   condition: succeeded()
