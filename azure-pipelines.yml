@@ -51,5 +51,6 @@ jobs:
     inputs:
       repository: $(DOCKER_REPOSITORY)
       command: buildAndPush
-      Dockerfile: ./Dockerfile
+      Dockerfile: '**/Dockerfile'
       tags: '$(Build.BuildNumber)'
+      
