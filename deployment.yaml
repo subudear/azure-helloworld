@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: helloworld
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deploy
+  namespace: helloworld
+  labels:
+    app: hello-world-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-app
+  template:
+    metadata:
+      labels:
+        app: hello-world-app
+    spec:
+      containers:
+      - name: helloworldapp
+        image: 706949302588.dkr.ecr.us-east-2.amazonaws.com/test-hello-world:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 400m
+            memory: 512Mi
+          requests:
+            cpu: 400m
+            memory: 512Mi
+        securityContext:
+          runAsUser: 1000
+          
+          
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-world-svc
+  name: hello-world-svc
+  namespace: helloworld
+spec:
+  ports:
+  - name: helloworld
+    nodePort: 30423
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: hello-world-app
+  sessionAffinity: None
+  type: NodePort
