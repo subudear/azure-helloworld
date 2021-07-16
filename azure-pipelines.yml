@@ -1,62 +1,63 @@
 trigger: 
  - master
 
-pool:
-   vmImage: Ubuntu-latest
+jobs:
+- job: Build
+  displayName: Build
 
-container: mcr.microsoft.com/vscode/devcontainers/go:1.16
+  pool:
+    vmImage: 'ubuntu-16.04'
 
-variables:
-  - group: dev
-  - name: DOCKER_REPOSITORY
-    value: $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(DOCKER_REPOSITORY_NAME)
+  container: mcr.microsoft.com/vscode/devcontainers/go:1.16
 
-steps: 
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo inside container
+  steps:
+  - task: CmdLine@2
+    inputs:
+      script: |
+        echo inside container
       
-      echo Hello world
-      echo "$(cat /etc/os-release)"
-- task: Go@0
-  inputs:
-    command: 'get'
-    arguments: '-d'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: Go@0
-  inputs:
-    command: 'build'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: 'deployment.xml'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
-  inputs:
-     artifactName: drop
+        echo Hello world
+        echo "$(cat /etc/os-release)"
+  - task: Go@0
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    inputs:
+      command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'deployment.xml'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    inputs:
+       artifactName: drop
+- job: Package
+  dependsOn: BuildAndTest
+  condition: succeeded()
 
-- script: |
-    apt-get update
-    apt-get install -y python3
-    apt-get install -y python3-pip
-    apt-get install -y python3-setuptools
-    pip3 install --upgrade pip
-    pip3 --no-cache-dir install --upgrade awscli
-  displayName: 'Install awscli'
+  pool:
+    vmImage: 'ubuntu-16.04'
 
-- script: |
-    aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
-  displayName: 'Login to AWS'
-  env:
-    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-
-- task: Docker@2
-  displayName: Build docker image
-  inputs:
-    repository: $(DOCKER_REPOSITORY)
-    command: buildAndPush
-    Dockerfile: Dockerfile
-    tags: '$(Build.BuildNumber)'
+  steps:
+  - checkout: none
+  - script: |
+      aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
+    displayName: 'Login to AWS'
+    env:
+      AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+      AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+  - task: DownloadPipelineArtifact@1
+    inputs:
+      artifactName: 'MyProject'
+      targetPath: '$(System.DefaultWorkingDirectory)'
+  - task: Docker@2
+    displayName: Build docker image
+    inputs:
+      repository: $(DOCKER_REPOSITORY)
+      command: buildAndPush
+      Dockerfile: Dockerfile
+      tags: '$(Build.BuildNumber)'
