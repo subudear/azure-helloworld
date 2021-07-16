@@ -21,7 +21,7 @@ jobs:
       command: 'build'
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      SourceFolder: '$(Build.SourcesDirectory)'
       Contents: 'deployment.xml'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
