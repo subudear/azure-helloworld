@@ -23,7 +23,8 @@ jobs:
       workingDirectory: '$(System.DefaultWorkingDirectory)'
   - task: CopyFiles@2
     inputs:
-	    Contents: 'deployment.xml'
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'deployment.yaml'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
     inputs:
