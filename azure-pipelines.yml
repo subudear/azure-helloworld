@@ -9,7 +9,7 @@ jobs:
   pool:
     vmImage: Ubuntu-latest
 
-  container: avcosystems/golang-node:1.16
+  container: golang:1.16-alpine
   steps:
   
   - task: Go@0
