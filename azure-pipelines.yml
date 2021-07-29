@@ -14,7 +14,7 @@ jobs:
   - task: Go@0
     inputs:
       command: 'custom'
-      customCommand: 'go mod init'
+      customCommand: 'mod init'
   - task: Go@0
     displayName: "Go Get"
     inputs:
