@@ -26,7 +26,7 @@ jobs:
     displayName: 'Go Test'
     inputs:
       command: 'test'
-      arguments: '-v'
+      arguments: './...'
   - task: CopyFiles@2
     displayName: "Copy files to ArtifactStaging"
     inputs:
