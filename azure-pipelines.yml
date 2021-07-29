@@ -11,17 +11,28 @@ jobs:
 
   container: avcosystems/golang-node:1.16
   steps:
+  
   - task: Go@0
-    displayName: 'go get'
+    displayName: "Go Get"
     inputs:
       command: 'get'
       arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
   - task: Go@0
-    displayName: 'go build'
+    displayName: "Go Build"
     inputs:
-      command: build  
+      command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
   - task: Go@0
-    displayName: 'go test'
+    displayName: 'Go Test'
     inputs:
       command: 'test'
       arguments: '-v'
+  - task: CopyFiles@2
+    displayName: "Copy files to ArtifactStaging"
+    inputs:
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+       artifactName: drop
