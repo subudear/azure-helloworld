@@ -1,0 +1,28 @@
+trigger:
+- master
+
+
+jobs:
+- job: BuildAndTest
+  workspace:
+    clean: all
+  pool:
+    vmImage: Ubuntu-latest
+
+  container: avcosystems/golang-node:1.16
+  steps:
+  - task: Go@0
+    displayName: 'go get'
+    inputs:
+      command: 'get'
+      arguments: '-d'
+  - task: Go@0
+    displayName: 'go build'
+    inputs:
+      command: build
+      arguments: '-o $(Agent.TempDirectory)'   
+  - task: Go@0
+    displayName: 'go test'
+    inputs:
+      command: 'test'
+      arguments: '-v'
