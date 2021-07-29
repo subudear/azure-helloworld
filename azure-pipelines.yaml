@@ -19,8 +19,7 @@ jobs:
   - task: Go@0
     displayName: 'go build'
     inputs:
-      command: build
-      arguments: '-o $(Agent.TempDirectory)'   
+      command: build  
   - task: Go@0
     displayName: 'go test'
     inputs:
