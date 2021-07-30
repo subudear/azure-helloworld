@@ -1,6 +1,7 @@
 package health
 
 import "net/http"
+import "fmt"
 
 //check health
 func health(w http.ResponseWriter, r *http.Request) {
