@@ -1,9 +1,9 @@
 
 trigger: 
- - master
+ - main
 
 pool:
-   vmImage: Self-Hosted-Agent
+   name: Self-Hosted-Agent
 
 steps:
 - task: CmdLine@2
