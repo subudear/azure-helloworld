@@ -11,6 +11,13 @@ jobs:
 
   container: golang:1.16
   steps:
+  - task: CmdLine@2
+    inputs:
+      script: |
+        echo inside container
+      
+        echo Hello world
+        echo "$(cat /etc/os-release)"
   - task: Go@0
     displayName: "Go Get"
     inputs:
