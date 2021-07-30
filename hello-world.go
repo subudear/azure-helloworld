@@ -10,8 +10,12 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 
 func main() {
-	http.HandleFunc("/",index)
-	http.HandleFunc("/health",health.health)
 	fmt.Println("Server Starting...")
+    mux := http.NewServeMux()
+    mux.HandleFunc("/", index)
+	//http.HandleFunc("/",index)
+	//http.HandleFunc("/health",health.health)
+	mux.HandleFunc("/health", health.health)
+
 	http.ListenAndServe(":8080",nil)
 }
