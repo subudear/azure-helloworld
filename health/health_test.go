@@ -9,7 +9,7 @@ func TestGetHealth(t *testing.T) {
         request, _ := http.NewRequest(http.MethodGet,"/health",nil)
         response := httptest.NewRecorder()
 
-        health(response, request)
+        Health(response, request)
         got := response.Body.String()
         want := "healthy"
         if gpt != want {
