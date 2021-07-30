@@ -11,7 +11,7 @@ func TestGetHealth(t *testing.T) {
 
         Health(response, request)
         got := response.Body.String()
-        want := "healthy"
+        want := "<h1>Health Check Pass</h1>"
         if got != want {
             t.Errorf("Hanlder returned wrong message, got %q, want %q", got, want)
         }
