@@ -15,7 +15,7 @@ func main() {
     mux.HandleFunc("/", index)
 	//http.HandleFunc("/",index)
 	//http.HandleFunc("/health",health.health)
-	mux.HandleFunc("/health", health.health)
+	mux.HandleFunc("/health", health.Health)
 
 	http.ListenAndServe(":8080",nil)
 }
