@@ -11,7 +11,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/",index)
-	http.HandleFunc(health.health)
+	http.HandleFunc("/health",health.health)
 	fmt.Println("Server Starting...")
 	http.ListenAndServe(":8080",nil)
 }
