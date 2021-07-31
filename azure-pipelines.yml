@@ -1,54 +1,50 @@
 trigger:
 - main
 
-stages:
-- stage: BuildStage
-  pool:
-     name: Self-Hosted-Agent
-  jobs:
-  - job: BuildAndTest
-    workspace:
-      clean: all
-    pool:
-      name: Self-Hosted-Agent
 
-    container: avcosystems/golang-node:1.16
-    steps:
-    - task: Go@0
-      displayName: "Go Get"
-      inputs:
-        command: 'get'
-        arguments: '-d'
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: Go@0
-      displayName: "Go Build"
-      inputs:
-        command: 'build'
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: Go@0
-      displayName: 'Go Test'
-      inputs:
-        command: 'test'
-        arguments: './...'
-    - task: CopyFiles@2
-     displayName: "Copy files to ArtifactStaging"
-      inputs:
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    - task: PublishBuildArtifacts@1
-      displayName: "Publish Artifact"
-      inputs:
-         artifactName: drop
-- stage: OnHost
-  jobs:
-  - job: OnBuildHost
-    pool:
-      name: Self-Hosted-Agent
+jobs:
+- job: BuildAndTest
+  workspace:
+    clean: all
+  pool:
+    name: Self-Hosted-Agent
+
+  container: avcosystems/golang-node:1.16
+  steps:
+  - task: Go@0
+    displayName: "Go Get"
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Build"
+    inputs:
+      command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: 'Go Test'
+    inputs:
+      command: 'test'
+      arguments: './...'
+  - task: CopyFiles@2
+    displayName: "Copy files to ArtifactStaging"
+    inputs:
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+       artifactName: drop
+
+- job: OnBuildHost
+  pool:
+    name: Self-Hosted-Agent
   
-    steps:
-    - task: CmdLine@2
-      inputs:
-        script: |
-          echo inside container
-        
-          echo Hello world
-          echo "$(go version)"
+  steps:
+  - task: CmdLine@2
+    inputs:
+      script: |
+        echo inside container
+      
+        echo Hello world
+        echo "$(go version)"
