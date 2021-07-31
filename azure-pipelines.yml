@@ -12,12 +12,11 @@ jobs:
   container: avcosystems/golang-node:1.16
   steps:
   - task: CmdLine@2
-  inputs:
-    script: |
-      echo inside container
-    
-      echo Hello world
-      echo "$(go version)"
+    inputs:
+      script: |
+        echo inside container
+        echo Hello world
+        echo "$(go version)"
   - task: Go@0
     displayName: "Go Get"
     inputs:
