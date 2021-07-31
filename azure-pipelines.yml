@@ -47,4 +47,4 @@ jobs:
         echo inside container
       
         echo Hello world
-        echo "$(go version)"
+        $Env:Path
