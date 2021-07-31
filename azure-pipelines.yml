@@ -37,9 +37,9 @@ jobs:
        artifactName: drop
 
 - job: OnBuildHost
+  dependsOn: BuildAndTest
   pool:
-    name: Self-Hosted-Agent
-  
+    name: Self-Hosted-Agent  
   steps:
   - task: CmdLine@2
     inputs:
@@ -47,4 +47,4 @@ jobs:
         echo inside container
       
         echo Hello world
-        $Env:Path
+        echo %PATH%
