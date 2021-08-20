@@ -41,9 +41,22 @@ jobs:
   pool:
     name: Self-Hosted-Agent  
   steps:
-  - task: CmdLine@2
+  - task: Docker@2
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Docker Build'
     inputs:
-      script: |
-        echo inside container      
-        echo Hello world
-        echo %PATH%
+      containerRegistry: '$(dockerRegistryServiceConnection)'
+      repository: '$(imageRepository)'
+      command: 'build'
+      Dockerfile: '$(dockerfilePath)'
+      tags: '$(Build.BuildNumber)'    
+  - task: ArtifactoryDocker@1
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      command: 'push'
+      artifactoryService: '$(artifactoryServiceConnection)'
+      targetRepo: '$(targetRepo)'
+      imageName: '$(imageName):$(imageTag)'
+      collectBuildInfo: true
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
