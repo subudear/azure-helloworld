@@ -5,7 +5,7 @@ WORKDIR /go/src/app
 COPY ./health ./health
 COPY *.go .
 
-RUN go mod init
+#RUN go mod init
 
 RUN go build -o main .
 
