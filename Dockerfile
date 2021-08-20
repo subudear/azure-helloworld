@@ -2,6 +2,7 @@ FROM golang:1.16 AS base
 
 WORKDIR /go/src/app
 
+COPY ./health ./health
 COPY *.go .
 
 RUN go mod init
