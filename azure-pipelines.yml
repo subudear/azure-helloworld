@@ -57,6 +57,3 @@ jobs:
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(targetRepo)'
       imageName: '$(imageName):$(imageTag)'
-      collectBuildInfo: true
-      buildName: '$(Build.DefinitionName)'
-      buildNumber: '$(Build.BuildNumber)'
