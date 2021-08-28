@@ -9,7 +9,7 @@ jobs:
   pool:
     name: Self-Hosted-Agent
 
-  container: avcosystems/golang-node:1.16
+  #container: avcosystems/golang-node:1.16
   steps:
   - task: Go@0
     displayName: "Go Get"
