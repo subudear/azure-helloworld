@@ -2,7 +2,7 @@ trigger:
  - master
 
 pool:
-   vmImage: Ubuntu-latest
+   vmImage: Self-Hosted-Agent
 
 variables:
   - group: dev
