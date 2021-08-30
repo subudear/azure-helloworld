@@ -2,7 +2,7 @@ trigger:
  - master
 
 pool:
-   vmImage: Self-Hosted-Agent
+   name: Self-Hosted-Agent
 
 variables:
   - group: dev
