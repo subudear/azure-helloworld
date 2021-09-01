@@ -1,0 +1,63 @@
+trigger: 
+ - main
+
+pool:
+   name: Self-Hosted-Agent
+
+variables:
+  - group: dev
+
+steps: 
+
+- task: Go@0
+  displayName: "Go Get"
+  inputs:
+    command: 'get'
+    arguments: '-d'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+- task: Go@0
+  displayName: "Go Build"
+  inputs:
+    command: 'build'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: 'deployment.yaml'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+     artifactName: drop
+
+
+- script: |
+    aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
+  displayName: 'Login to AWS'
+  env:
+    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+
+- task: Docker@2
+  displayName: Build docker image
+  inputs:
+    repository: $(AWS_ECR_MAGE_URI)
+    command: buildAndPush
+    Dockerfile: Dockerfile
+    tags: '$(Build.BuildNumber)'
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    command: build
+    dockerfile: '$(System.DefaultWorkingDirectory)/Dockerfile'
+    buildContext: '$(System.DefaultWorkingDirectory)'
+    repository: $(DOCKER_REPOSITORY_NAME)
+
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'AWS_ECR'
+    regionName: $(AWS_REGION)
+    imageSource: 'imagename'
+    sourceImageName: $(DOCKER_REPOSITORY_NAME)
+    sourceImageTag: $(Build.BuildId)
+    pushTag: latest
+    repositoryName: $(DOCKER_REPOSITORY_NAME)
