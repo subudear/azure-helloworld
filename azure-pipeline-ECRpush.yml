@@ -43,6 +43,6 @@ steps:
     regionName: $(AWS_REGION)
     imageSource: 'imagename'
     sourceImageName: $(AWS_ECR_MAGE_URI)
-    sourceImageTag: $(Build.BuildNumber)
-    pushTag: $(Build.BuildNumber)
+    sourceImageTag: $(Build.BuildId)
+    pushTag: $(Build.BuildId)
     repositoryName: $(AWS_ECR_REPOSITORY_NAME)
