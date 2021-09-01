@@ -10,11 +10,13 @@ variables:
 steps: 
 
 - task: Go@0
+  displayName: "Go Get"
   inputs:
     command: 'get'
     arguments: '-d'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: Go@0
+  displayName: "Go Build"
   inputs:
     command: 'build'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
