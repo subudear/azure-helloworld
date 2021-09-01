@@ -12,9 +12,9 @@ RUN go build -o main .
 
 ENV SWAGGER_VERSION=v0.27.0
 
-download_url=https://github.com/go-swagger/go-swagger/releases/download/${SWAGGER_VERSION}/swagger_linux_amd64
-curl -o /usr/local/bin/swagger -L'#' "$download_url"
-chmod +x /usr/local/bin/swagger
+ENV download_url=https://github.com/go-swagger/go-swagger/releases/download/${SWAGGER_VERSION}/swagger_linux_amd64
+RUN curl -o /usr/local/bin/swagger -L'#' "$download_url"
+RUN chmod +x /usr/local/bin/swagger
 
 #Build the container to run
 FROM alpine:3.13 AS Publish
