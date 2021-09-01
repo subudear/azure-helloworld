@@ -11,7 +11,7 @@ COPY *.go .
 RUN go build -o main .
 
 #Build the container to run
-FROM scratch AS Publish
+FROM alpine:3.13 AS Publish
 
 #Copy compiled app from stage build
 COPY --from=base /go/src/app /app
