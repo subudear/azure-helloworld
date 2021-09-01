@@ -6,8 +6,6 @@ pool:
 
 variables:
   - group: dev
-  - name: DOCKER_REPOSITORY
-    value: $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(DOCKER_REPOSITORY_NAME)
 
 steps: 
 
