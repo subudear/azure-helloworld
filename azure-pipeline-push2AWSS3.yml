@@ -29,20 +29,14 @@ steps:
   inputs:
      artifactName: drop
 
-- task: Docker@2
-  displayName: Build an image
+- task: S3Upload@1
   inputs:
-    command: build
-    dockerfile: '$(System.DefaultWorkingDirectory)/Dockerfile'
-    buildContext: '$(System.DefaultWorkingDirectory)'
-    repository: $(AWS_ECR_MAGE_URI)
-
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'AWS_Service'
-    regionName: $(AWS_REGION)
-    imageSource: 'imagename'
-    sourceImageName: $(AWS_ECR_MAGE_URI)
-    sourceImageTag: $(Build.BuildId)
-    pushTag: $(Build.BuildId)
-    repositoryName: $(AWS_ECR_REPOSITORY_NAME)
+    awsCredentials: 'aws_service'
+    regionName: 'ap-southeast-2'
+    bucketName: 'azuredevops2awss3upload'
+    globExpressions: '**'
+    createBucket: true
+    keyManagement: 'awsManaged'
+    encryptionAlgorithm: 'AES256'
+    logRequest: true
+    logResponse: true
