@@ -32,10 +32,11 @@ steps:
 
 - task: S3Upload@1
   inputs:
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
     awsCredentials: 'aws_service'
     regionName: 'ap-southeast-2'
     bucketName: 'azuredevops2awss3upload'
-    globExpressions: '$(Build.ArtifactStagingDirectory)/drop'
+    globExpressions: 'drop'
     createBucket: true
     keyManagement: 'awsManaged'
     encryptionAlgorithm: 'AES256'
