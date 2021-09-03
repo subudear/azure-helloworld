@@ -21,22 +21,25 @@ steps:
     command: 'build'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: CopyFiles@2
+  displayName: "Copy Artifacts"
   inputs:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
     Contents: 'deployment.yaml'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
+- task: ArchiveFiles@2
   inputs:
-     pathToPublish: '$(Build.ArtifactStagingDirectory)'
-     artifactName: drop
-
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/deploy.zip'
+    replaceExistingArchive: true
 - task: S3Upload@1
   inputs:
     sourceFolder: '$(Build.ArtifactStagingDirectory)'
     awsCredentials: 'aws_service'
     regionName: 'ap-southeast-2'
     bucketName: 'azuredevops2awss3upload'
-    globExpressions: '**\*.zip'
+    globExpressions: 'deploy.zip'
     createBucket: true
     keyManagement: 'awsManaged'
     encryptionAlgorithm: 'AES256'
