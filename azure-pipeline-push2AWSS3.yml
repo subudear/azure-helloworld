@@ -27,6 +27,7 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
+     pathToPublish: '$(Build.ArtifactStagingDirectory)'
      artifactName: drop
 
 - task: S3Upload@1
@@ -34,7 +35,7 @@ steps:
     awsCredentials: 'aws_service'
     regionName: 'ap-southeast-2'
     bucketName: 'azuredevops2awss3upload'
-    globExpressions: '**'
+    globExpressions: '$(Build.ArtifactStagingDirectory)/drop'
     createBucket: true
     keyManagement: 'awsManaged'
     encryptionAlgorithm: 'AES256'
