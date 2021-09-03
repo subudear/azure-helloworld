@@ -36,7 +36,7 @@ steps:
     awsCredentials: 'aws_service'
     regionName: 'ap-southeast-2'
     bucketName: 'azuredevops2awss3upload'
-    globExpressions: 'drop.zip'
+    globExpressions: '**'
     createBucket: true
     keyManagement: 'awsManaged'
     encryptionAlgorithm: 'AES256'
