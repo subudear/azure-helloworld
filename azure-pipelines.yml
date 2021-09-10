@@ -58,10 +58,12 @@ jobs:
 #      Dockerfile: '$(dockerfilePath)'
 #      tags: '$(Build.BuildNumber)'    
   - task: ArtifactoryToolsInstaller@1
+    displayName: "Install JFrog CLI"
     inputs:
       artifactoryService: 'BasicAuth-artifactory'
       cliInstallationRepo: 'https://releases.jfrog.io/ui/native/jfrog-cli/v2/'
   - task: ArtifactoryDocker@1
+    displayName: "Push to Artifactory"
     #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
       command: 'push'
