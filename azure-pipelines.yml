@@ -26,6 +26,7 @@ jobs:
       command: 'build'
       workingDirectory: '$(System.DefaultWorkingDirectory)'
   - task: Go@0
+    displayName: "Go Test"
     inputs:
       command: 'test'
       arguments: './...'
@@ -47,15 +48,15 @@ jobs:
     inputs:
       dockerVersion: '17.09.0-ce'
       releaseType: stable
-  - task: Docker@2
-    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    displayName: 'Docker Build'
-    inputs:
-      containerRegistry: '$(dockerRegistryServiceConnection)'
-      repository: '$(imageRepository)'
-      command: 'build'
-      Dockerfile: '$(dockerfilePath)'
-      tags: '$(Build.BuildNumber)'    
+#  - task: Docker@2
+#    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#    displayName: 'Docker Build'
+#    inputs:
+#      containerRegistry: '$(dockerRegistryServiceConnection)'
+#      repository: '$(imageRepository)'
+#      command: 'build'
+#      Dockerfile: '$(dockerfilePath)'
+#      tags: '$(Build.BuildNumber)'    
 
   - task: ArtifactoryDocker@1
     #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
