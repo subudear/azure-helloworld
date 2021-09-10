@@ -22,11 +22,10 @@ jobs:
     inputs:
       command: 'build'
       workingDirectory: '$(System.DefaultWorkingDirectory)'
-  - task: Bash@3
-    displayName: 'Go Test'
+  - task: Go@0
     inputs:
-      targetType: 'inline'
-      script: cgo_enabled=0 test ./...
+      command: 'test'
+      arguments: './...'
   - task: CopyFiles@2
     displayName: "Copy files to ArtifactStaging"
     inputs:
