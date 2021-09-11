@@ -44,10 +44,7 @@ jobs:
   pool:
     name: Self-Hosted-Agent  
   steps:
-  - task: DockerInstaller@0
-    inputs:
-      dockerVersion: '17.09.0-ce'
-      releaseType: stable
+
   - task: Docker@2
     #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: 'Docker Build'
