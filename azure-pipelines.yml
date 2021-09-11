@@ -7,7 +7,7 @@ jobs:
   workspace:
     clean: all
   pool:
-    name: Self-Hosted-Agent
+    name: windows_agent
 
   #container: avcosystems/golang-node:1.16
   steps:
