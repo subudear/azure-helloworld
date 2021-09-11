@@ -28,7 +28,7 @@ stages:
         echo "stageVariable :" $(stageVariable)
         echo "jobVariable :" $(jobVariable)
         echo "pipelineVariable :" $(sameNameVariable)
-        echo "group1Variable :" $(GROUP1.sameNameVariable)
+        echo "group1Variable :" ${{ GROUP1.sameNameVariable }}
         echo "group2Variable :" $(GROUP2.sameNameVariable)
     - task: Bash@3
       inputs:
