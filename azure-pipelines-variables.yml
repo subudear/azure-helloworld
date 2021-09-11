@@ -7,9 +7,8 @@ pool:
 variables:
 - name: globalVariable
   value: "This is root level variable" 
-- group: |
-    GROUP1
-    GROUP2 
+- group: GROUP1
+- group: GROUP2 
 
 stages:
 - stage:
