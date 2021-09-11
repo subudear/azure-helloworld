@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  name: Azure Pipelines
+  name: Self-Hosted-Agent
 
 variables:
 - name: sameNameVariable
