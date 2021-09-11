@@ -37,3 +37,5 @@ stages:
         script: |
           # Write your commands here
           echo ${{ variables.sameNameVariable }}
+          echo "group1Variable :" $(group1.sameNameVariable)
+          echo "group2Variable :" $(group2.sameNameVariable)
