@@ -27,4 +27,4 @@ stages:
         targetType: 'inline'
         script: |
           # Write your commands here
-          echo ${{ sameNameVariable }}
+          echo ${{ variables.sameNameVariable }}
