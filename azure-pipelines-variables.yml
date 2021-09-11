@@ -7,35 +7,55 @@ pool:
 variables:
 - name: globalVariable
   value: "This is root level variable" 
-- group: GROUP1
 
 
 stages:
 - stage:
   displayName: "Stage 1"
   variables:
-    stageVariable: "This is Stage level variable"
+    stageVariable: "This is Stage 1 level variable"
   jobs:
   - job: BuildAndTest
     variables:
     - name: jobVariable
-      value: "This is Job level variable"
-    - group: GROUP2 
+      value: "This is Job level variable in Stage 1"
+
     workspace:
       clean: all
     steps:
-    - script: |
-        echo "globalVariable :" $(globalVariable)
-        echo "stageVariable :" $(stageVariable)
-        echo "jobVariable :" $(jobVariable)
-        echo "pipelineVariable :" $(sameNameVariable)
-        echo "group1Variable :" $(sameNameVariable)
-        echo "group2Variable :" $(sameNameVariable)
+
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
           # Write your commands here
           echo ${{ variables.sameNameVariable }}
-          echo "group1Variable :" $(GROUP1.sameNameVariable)
-          echo "group2Variable :" $(GROUP2.sameNameVariable)
+          echo "globalVariable :" $(globalVariable)
+          echo "stageVariable :" $(stageVariable)
+          echo "jobVariable :" $(jobVariable)
+          echo "pipelineVariable :" $(sameNameVariable)
+
+- stage:
+  displayName: "Stage 2"
+  variables:
+    stageVariable: "This is Stage 2 level variable"
+  jobs:
+  - job: BuildAndTest
+    variables:
+    - name: jobVariable
+      value: "This is Job level variable in Stage 2"
+
+    workspace:
+      clean: all
+    steps:
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          echo ${{ variables.sameNameVariable }}
+          echo "globalVariable :" $(globalVariable)
+          echo "stageVariable :" $(stageVariable)
+          echo "jobVariable :" $(jobVariable)
+          echo "pipelineVariable :" $(sameNameVariable)
