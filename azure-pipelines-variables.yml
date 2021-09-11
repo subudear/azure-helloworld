@@ -5,7 +5,7 @@ stages:
 - stage:
   displayname: "Stage 1"
   pool:
-    name: windows_agent
+    name: Self-Hosted-Agent
   variables:
   jobs:
   - job: BuildAndTest
