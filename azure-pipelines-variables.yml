@@ -5,7 +5,7 @@ stages:
 - stage:
   displayname: "Stage 1"
   pool:
-    name: Self-Hosted-Agent
+    name: Azure Pipelines
   variables:
   jobs:
   - job: BuildAndTest
