@@ -18,8 +18,8 @@ stages:
   displayName: "Stage 1"
   variables:
     stageVariable: "This is Stage 1 level variable"
-    overrideGlobalVariable: "STAGE"
-    overrideGlobalandStageVariable: "Stage"
+    overrideGlobalVariable: "STAGE 1"
+    overrideGlobalandStageVariable: "Stage 1"
   jobs:
   - job: BuildAndTest
     variables:
@@ -51,12 +51,15 @@ stages:
   displayName: "Stage 2"
   variables:
     stageVariable: "This is Stage 2 level variable"
+    overrideGlobalVariable: "STAGE 2"
+    overrideGlobalandStageVariable: "Stage 2"
   jobs:
   - job: BuildAndTest
     variables:
     - name: jobVariable
       value: "This is Job level variable in Stage 2"
-
+    - name: overrideGlobalandStageVariable
+      value: "Stage2 -Job"
     workspace:
       clean: all
     steps:
@@ -70,4 +73,6 @@ stages:
           echo "globalVariable :" $(globalVariable)
           echo "stageVariable :" $(stageVariable)
           echo "jobVariable :" $(jobVariable)
+          echo "jobVariable :" $(overrideGlobalVariable)
+          echo "jobVariable :" $(overrideGlobalandStageVariable)
           echo "pipelineVariable :" $(sameNameVariable)
