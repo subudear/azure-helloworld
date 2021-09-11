@@ -8,7 +8,7 @@ variables:
 - name: globalVariable
   value: "This is root level variable" 
 - group: GROUP1
-- group: GROUP2 
+
 
 stages:
 - stage:
@@ -20,6 +20,7 @@ stages:
     variables:
     - name: jobVariable
       value: "This is Job level variable"
+    - group: GROUP2 
     workspace:
       clean: all
     steps:
@@ -28,8 +29,8 @@ stages:
         echo "stageVariable :" $(stageVariable)
         echo "jobVariable :" $(jobVariable)
         echo "pipelineVariable :" $(sameNameVariable)
-        echo "group1Variable :" ${{ GROUP1.sameNameVariable }}
-        echo "group2Variable :" $(GROUP2.sameNameVariable)
+        echo "group1Variable :" $(sameNameVariable)
+        echo "group2Variable :" $(sameNameVariable)
     - task: Bash@3
       inputs:
         targetType: 'inline'
