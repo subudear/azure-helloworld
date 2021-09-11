@@ -15,7 +15,8 @@ stages:
   jobs:
   - job: BuildAndTest
     variables:
-      sameNameVariable: "This is Job level variable"
+    - name: sameNameVariable
+      value: "This is Job level variable"
     workspace:
       clean: all
     steps:
