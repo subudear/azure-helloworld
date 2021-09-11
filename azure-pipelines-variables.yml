@@ -43,9 +43,9 @@ stages:
           echo "globalVariable :" $(globalVariable)
           echo "stageVariable :" $(stageVariable)
           echo "jobVariable :" $(jobVariable)
-          echo "jobVariable :" $(overrideGlobalVariable)
-          echo "jobVariable :" $(overrideGlobalandStageVariable)
-          echo "pipelineVariable :" $(sameNameVariable)
+          echo "overrideGlobalVariable in Stage :" $(overrideGlobalVariable)
+          echo "overrideGlobalandStageVariable in Job :" $(overrideGlobalandStageVariable)
+          echo "Override pipelineVariable :" $(sameNameVariable)
 
 - stage:
   displayName: "Stage 2"
@@ -73,6 +73,6 @@ stages:
           echo "globalVariable :" $(globalVariable)
           echo "stageVariable :" $(stageVariable)
           echo "jobVariable :" $(jobVariable)
-          echo "jobVariable :" $(overrideGlobalVariable)
-          echo "jobVariable :" $(overrideGlobalandStageVariable)
-          echo "pipelineVariable :" $(sameNameVariable)
+          echo "overrideGlobalVariable in Stage :" $(overrideGlobalVariable)
+          echo "overrideGlobalandStageVariable in Job :" $(overrideGlobalandStageVariable)
+          echo "Get pipelineVariable as is:" $(sameNameVariable)
