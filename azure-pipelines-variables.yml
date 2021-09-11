@@ -5,24 +5,27 @@ pool:
   name: Self-Hosted-Agent
 
 variables:
-- name: sameNameVariable
+- name: globalVariable
   value: "This is root level variable" 
 
 stages:
 - stage:
   displayName: "Stage 1"
   variables:
-    sameNameVariable: "This is Stage level variable"
+    stageVariable: "This is Stage level variable"
   jobs:
   - job: BuildAndTest
     variables:
-    - name: sameNameVariable
+    - name: jobVariable
       value: "This is Job level variable"
     workspace:
       clean: all
     steps:
     - script: |
-        echo $(sameNameVariable)
+        echo "globalVariable :" $(globalVariable)
+        echo "stageVariable :" $(stageVariable)
+        echo "jobVariable :" $(jobVariable)
+        echo "pipelineVariable :" $(sameNameVariable)
     - task: Bash@3
       inputs:
         targetType: 'inline'
