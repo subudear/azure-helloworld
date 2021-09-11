@@ -1,0 +1,30 @@
+trigger:
+- master
+
+stages:
+- stage:
+  displayname: "Stage 1"
+  pool:
+    name: windows_agent
+  variables:
+  jobs:
+  - job: BuildAndTest
+    workspace:
+      clean: all
+    steps:
+    - task: GoTool@0
+      inputs:
+        version: '1.17'
+- stage:
+  displayname: "Stage 2"
+  pool:
+    name: windows_agent
+  variables:
+  jobs:
+  - job: BuildAndTest
+    workspace:
+      clean: all
+    steps:
+    - task: GoTool@0
+      inputs:
+        version: '1.17'
