@@ -7,6 +7,9 @@ pool:
 variables:
 - name: globalVariable
   value: "This is root level variable" 
+- group: |
+    GROUP1
+    GROUP2 
 
 stages:
 - stage:
@@ -16,9 +19,6 @@ stages:
   jobs:
   - job: BuildAndTest
     variables:
-    - group: |
-        GROUP1
-        GROUP2 
     - name: jobVariable
       value: "This is Job level variable"
     workspace:
