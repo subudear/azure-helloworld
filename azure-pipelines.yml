@@ -42,7 +42,7 @@ jobs:
 - job: OnBuildHost
   dependsOn: BuildAndTest
   pool:
-    name: windows-agent  
+    name: windows_agent  
   steps:
 
   - task: Docker@2
