@@ -16,6 +16,9 @@ stages:
   jobs:
   - job: BuildAndTest
     variables:
+    - group: |
+        group1
+        group2 
     - name: jobVariable
       value: "This is Job level variable"
     workspace:
@@ -26,6 +29,8 @@ stages:
         echo "stageVariable :" $(stageVariable)
         echo "jobVariable :" $(jobVariable)
         echo "pipelineVariable :" $(sameNameVariable)
+        echo "group1Variable :" $(group1.sameNameVariable)
+        echo "group2Variable :" $(group2.sameNameVariable)
     - task: Bash@3
       inputs:
         targetType: 'inline'
