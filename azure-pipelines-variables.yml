@@ -19,6 +19,8 @@ stages:
     variables:
     - name: jobVariable
       value: "This is Job level variable in Stage 1"
+    - name: sameNameVariable
+      value: "This overrides pipeline variable"
 
     workspace:
       clean: all
