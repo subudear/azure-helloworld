@@ -1,6 +1,9 @@
 trigger:
 - master
 
+pool:
+  name: Azure Pipelines
+
 variables:
 - name: sameNameVariable
   value: "This is root level variable" 
@@ -8,8 +11,6 @@ variables:
 stages:
 - stage:
   displayName: "Stage 1"
-  pool:
-    name: Azure Pipelines
   variables:
     sameNameVariable: "This is Stage level variable"
   jobs:
