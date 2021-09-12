@@ -5,12 +5,10 @@ pool:
   name: Self-Hosted-Agent
 
 variables:
-  staticVar: 'my value' # static variable
-  compileVar: ${{ variables.staticVar }} # compile time expression
-  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
-  - name: one
-    value: initialValue 
-
+ one: initialValue 
+ staticVar: 'my value' # static variable
+ compileVar: ${{ variables.staticVar }} # compile time expression
+ isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
 
 stages:
 - stage:
