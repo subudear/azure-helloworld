@@ -17,18 +17,19 @@ stages:
   - job: A1
     steps:
       - script: |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one)
+          echo "Tempalte Expression value:" ${{ variables.one }} # outputs initialValue
+          echo "Macro variable value:" $(one)
         displayName: First variable pass
       - bash: echo '##vso[task.setvariable variable=one]secondValue'
         displayName: Set new variable value
       - script: |
-          echo ${{ variables.one }} # outputs initialValue
-          echo $(one) # outputs secondValue
+          echo "Tempalte Expression value:" ${{ variables.one }} # outputs initialValue
+          echo "Macro variable value:" $(one) # outputs secondValue
+          echo "Macro variable (isMain) value:" $(isMain)
         displayName: Second variable pass
-      - bash: echo $(one)
-      - powershell: echo $(one)
-      - script: echo $(one)
+      - bash: echo "Macro variable value:" $(one)
+      - powershell: echo "Macro variable value:" $(one)
+      - script: echo "Macro variable value:" $(one)
 - stage: 
   displayName: "Stage B"
   condition: and(succeeded(), eq(variables.isMain, 'true'))
