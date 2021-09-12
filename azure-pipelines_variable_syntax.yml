@@ -8,8 +8,8 @@ variables:
   staticVar: 'my value' # static variable
   compileVar: ${{ variables.staticVar }} # compile time expression
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')] # runtime expression
-- name: one
-  value: initialValue 
+  - name: one
+    value: initialValue 
 
 
 stages:
