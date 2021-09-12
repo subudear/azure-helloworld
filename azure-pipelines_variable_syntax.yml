@@ -14,7 +14,7 @@ stages:
 - stage:
   displayName: "Stage A"
   jobs:
-  - job: Test
+  - job: A1
     steps:
       - script: |
           echo ${{ variables.one }} # outputs initialValue
