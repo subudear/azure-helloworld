@@ -11,6 +11,13 @@ jobs:
 
   #container: avcosystems/golang-node:1.16
   steps:
+
+  - task: gitversion/setup@0
+    displayName: Determine Version Number
+    inputs:
+      versionSpec: '5.0.0'
+      includePrerelease: true
+  
   - task: GoTool@0
     inputs:
       version: '1.17'
