@@ -15,8 +15,7 @@ jobs:
   - task: gitversion/setup@0
     displayName: Determine Version Number
     inputs:
-      versionSpec: '5.0.0'
-      includePrerelease: true
+      versionSpec: '5.x'
   
   - task: GoTool@0
     inputs:
