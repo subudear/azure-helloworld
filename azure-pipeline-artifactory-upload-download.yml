@@ -1,8 +1,6 @@
 trigger:
 - master
 
-variables:
-  - group: artifactory
 
 jobs:
 - job: BuildAndTest
@@ -10,8 +8,6 @@ jobs:
     clean: all
   pool:
     name: Self-Hosted-Agent
-
-  #container: avcosystems/golang-node:1.16
   steps:
   - task: GoTool@0
     inputs:
@@ -51,7 +47,11 @@ jobs:
           "files": [
             {
               "pattern": "*.go",
-              "target": "uploadordownload-generic-local/go/"
+              "target": "uploadordownload-generic-local/upload/"
+            },
+                        {
+              "pattern": "*.yaml",
+              "target": "uploadordownload-generic-local/upload/"
             }
           ]
         }
@@ -65,8 +65,8 @@ jobs:
         {
           "files": [
             {
-              "pattern": "uploadordownload-generic-local/deployment.yaml",
-              "target": "c:\\tmp\\deployment1.yaml"
+              "pattern": "uploadordownload-generic-local/upload/*.go",
+              "target": "c:\\download\\*.go"
             }
           ]
         }
