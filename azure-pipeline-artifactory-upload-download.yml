@@ -69,3 +69,32 @@ jobs:
       artifactoryService: '$(artifactoryServiceConnection)'
       targetRepo: '$(targetRepo)'
       imageName: '$(imageName):$(imageTag)'
+  - task: ArtifactoryGenericUpload@2
+    inputs:
+      artifactoryService: 'BasicAuth-artifactory'
+      specSource: 'taskConfiguration'
+      fileSpec: |
+        {
+          "files": [
+            {
+              "pattern": "deployment.yaml",
+              "target": "$(targetRepo)"
+            }
+          ]
+        }
+      failNoOp: true
+      
+  - task: ArtifactoryGenericDownload@3
+    inputs:
+      connection: 'BasicAuth-artifactory'
+      specSource: 'taskConfiguration'
+      fileSpec: |
+        {
+          "files": [
+            {
+              "pattern": "deploymeny.yaml",
+              "target": "$(Build.ArtifactStagingDirectory)"
+            }
+          ]
+        }
+      failNoOp: true
