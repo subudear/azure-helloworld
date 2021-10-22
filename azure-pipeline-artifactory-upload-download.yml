@@ -50,8 +50,8 @@ jobs:
         {
           "files": [
             {
-              "pattern": "deployment.yaml",
-              "target": "uploadordownload-generic-local/"
+              "pattern": "*.go",
+              "target": "uploadordownload-generic-local/go/"
             }
           ]
         }
@@ -65,7 +65,7 @@ jobs:
         {
           "files": [
             {
-              "pattern": "uploadordownload-generic-local/deploymeny.yaml",
+              "pattern": "uploadordownload-generic-local/deployment.yaml",
               "target": "$(Build.ArtifactStagingDirectory)"
             }
           ]
