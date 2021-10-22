@@ -78,7 +78,7 @@ jobs:
           "files": [
             {
               "pattern": "deployment.yaml",
-              "target": "$(targetRepo)"
+              "target": "raaviblog.jfrog.io/$(targetRepo)"
             }
           ]
         }
