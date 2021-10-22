@@ -51,7 +51,7 @@ jobs:
           "files": [
             {
               "pattern": "deployment.yaml",
-              "target": "raaviblog.jfrog.io/artifactory/uploadordownload-generic-local/"
+              "target": "uploadordownload-generic-local/"
             }
           ]
         }
@@ -65,7 +65,7 @@ jobs:
         {
           "files": [
             {
-              "pattern": "raaviblog.jfrog.io/artifactory/uploadordownload-generic-local/deploymeny.yaml",
+              "pattern": "uploadordownload-generic-local/deploymeny.yaml",
               "target": "$(Build.ArtifactStagingDirectory)"
             }
           ]
