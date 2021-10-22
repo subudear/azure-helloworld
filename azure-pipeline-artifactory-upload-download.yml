@@ -1,0 +1,71 @@
+trigger:
+- master
+
+variables:
+  - group: artifactory
+
+jobs:
+- job: BuildAndTest
+  workspace:
+    clean: all
+  pool:
+    name: windows_agent
+
+  #container: avcosystems/golang-node:1.16
+  steps:
+  - task: GoTool@0
+    inputs:
+      version: '1.17'
+  - task: Go@0
+    displayName: "Go Get"
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Build"
+    inputs:
+      command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Test"
+    inputs:
+      command: 'test'
+      arguments: './...'
+  - task: CopyFiles@2
+    displayName: "Copy files to ArtifactStaging"
+    inputs:
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+       artifactName: drop
+
+- job: OnBuildHost
+  dependsOn: BuildAndTest
+  pool:
+    name: windows_agent  
+  steps:
+
+  - task: Docker@2
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Docker Build'
+    inputs:
+      containerRegistry: '$(dockerRegistryServiceConnection)'
+      repository: '$(imageRepository)'
+      command: 'build'
+      Dockerfile: '$(dockerfilePath)'
+      tags: '$(Build.BuildNumber)'    
+  - task: ArtifactoryToolsInstaller@1
+    displayName: "Install JFrog CLI"
+    inputs:
+      artifactoryService: 'BasicAuth-artifactory'
+      cliInstallationRepo: 'https://releases.jfrog.io/ui/native/jfrog-cli/v2/'
+  - task: ArtifactoryDocker@1
+    displayName: "Push to Artifactory"
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      command: 'push'
+      artifactoryService: '$(artifactoryServiceConnection)'
+      targetRepo: '$(targetRepo)'
+      imageName: '$(imageName):$(imageTag)'
