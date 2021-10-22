@@ -41,34 +41,7 @@ jobs:
     inputs:
        artifactName: drop
 
-- job: OnBuildHost
-  dependsOn: BuildAndTest
-  pool:
-    name: Self-Hosted-Agent
-  steps:
 
-  - task: Docker@2
-    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    displayName: 'Docker Build'
-    inputs:
-      containerRegistry: '$(dockerRegistryServiceConnection)'
-      repository: '$(imageRepository)'
-      command: 'build'
-      Dockerfile: '$(dockerfilePath)'
-      tags: '$(Build.BuildNumber)'    
-  - task: ArtifactoryToolsInstaller@1
-    displayName: "Install JFrog CLI"
-    inputs:
-      artifactoryService: 'BasicAuth-artifactory'
-      cliInstallationRepo: 'https://releases.jfrog.io/ui/native/jfrog-cli/v2/'
-  - task: ArtifactoryDocker@1
-    displayName: "Push to Artifactory"
-    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    inputs:
-      command: 'push'
-      artifactoryService: '$(artifactoryServiceConnection)'
-      targetRepo: '$(targetRepo)'
-      imageName: '$(imageName):$(imageTag)'
   - task: ArtifactoryGenericUpload@2
     inputs:
       artifactoryService: 'BasicAuth-artifactory'
@@ -78,7 +51,7 @@ jobs:
           "files": [
             {
               "pattern": "deployment.yaml",
-              "target": "raaviblog.jfrog.io/$(targetRepo)"
+              "target": "raaviblog.jfrog.io/artifactory/uploadordownload-generic-local/"
             }
           ]
         }
@@ -92,7 +65,7 @@ jobs:
         {
           "files": [
             {
-              "pattern": "deploymeny.yaml",
+              "pattern": "raaviblog.jfrog.io/artifactory/uploadordownload-generic-local/deploymeny.yaml",
               "target": "$(Build.ArtifactStagingDirectory)"
             }
           ]
