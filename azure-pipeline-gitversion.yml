@@ -1,0 +1,38 @@
+trigger:
+- master
+
+
+jobs:
+- job: BuildAndTest
+  workspace:
+    clean: all
+  pool:
+    name: Self-Hosted-Agent
+  steps:
+  - task: GoTool@0
+    inputs:
+      version: '1.17'
+  - task: Go@0
+    displayName: "Go Get"
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Build"
+    inputs:
+      command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Test"
+    inputs:
+      command: 'test'
+      arguments: './...'
+  - task: CopyFiles@2
+    displayName: "Copy files to ArtifactStaging"
+    inputs:
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+       artifactName: drop
