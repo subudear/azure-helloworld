@@ -13,6 +13,8 @@ jobs:
     inputs:
       useConfigFile: true
       configFilePath: './GitVersion.yml'
+  - script: echo current version is $(GitVersion.SemVer)
+    displayName: 'Display calculated version'      
   - task: Bash@3
     inputs:
       script: echo "##vso[build.updatebuildnumber]$(GitVersion.SemVer)"
