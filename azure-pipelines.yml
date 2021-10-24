@@ -12,11 +12,14 @@ jobs:
   #container: avcosystems/golang-node:1.16
   steps:
 
-  - task: gitversion/setup@0
-    displayName: Determine Version Number
+  - task: gitversion/execute@0
     inputs:
-      versionSpec: '5.x'
-  
+      useConfigFile: true
+      configFilePath: './GitVersion.yml'
+  - task: Bash@3
+    inputs:
+      script: echo "##vso[build.updatebuildnumber]$(GitVersion.SemVer)"
+    displayName: 'Update build number'
   - task: GoTool@0
     inputs:
       version: '1.17'
