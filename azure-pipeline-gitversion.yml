@@ -17,7 +17,7 @@ jobs:
     displayName: 'Display calculated version'      
   - task: Bash@3
     inputs:
-      script: echo "##vso[build.updatebuildnumber]$(GitVersion.SemVer)"
+      script: echo "##vso[build.updatebuildnumber]$(SemVer)"
     displayName: 'Update build number'
   - task: GoTool@0
     inputs:
