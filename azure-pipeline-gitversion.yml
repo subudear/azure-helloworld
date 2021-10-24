@@ -20,30 +20,3 @@ jobs:
       targetType: inline
       script: echo "##vso[build.updatebuildnumber]$(SemVer)"
     displayName: 'Update build number'
-  - task: GoTool@0
-    inputs:
-      version: '1.17'
-  - task: Go@0
-    displayName: "Go Get"
-    inputs:
-      command: 'get'
-      arguments: '-d'
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-  - task: Go@0
-    displayName: "Go Build"
-    inputs:
-      command: 'build'
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-  - task: Go@0
-    displayName: "Go Test"
-    inputs:
-      command: 'test'
-      arguments: './...'
-  - task: CopyFiles@2
-    displayName: "Copy files to ArtifactStaging"
-    inputs:
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact"
-    inputs:
-       artifactName: drop
