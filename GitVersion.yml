@@ -1,5 +1,18 @@
-mode: ContinuousDelivery
-branches: {}
+assembly-versioning-scheme: MajorMinorPatch
+mode: Mainline
+branches:
+  master:
+    regex: ^main$
+    tag: ""
+    is-mainline: true
+    increment: none
+    is-source-branch-for: ['feature', 'fix']
+  feature:
+    increment: Minor
+  fix:
+    regex: fix(es)?[/-]
+    increment: patch
+    source-branches: ['main']
 ignore:
   sha: []
 merge-message-formats: {}
