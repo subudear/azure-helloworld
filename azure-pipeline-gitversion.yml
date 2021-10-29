@@ -1,6 +1,5 @@
 trigger:
 - main
-- develop
 - fix
 - feature
 
