@@ -2,25 +2,20 @@ assembly-versioning-scheme: MajorMinorPatch
 mode: Mainline
 branches:
   master:
-    is-mainline: false
-  develop:
-    tag: ""
+    regex: ^master$|^main$
+    tag: ''
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
     is-mainline: true
-    increment: none
-    is-source-branch-for: ['feature', 'fix']
+    is-source-branch-for: ['feature', 'hotfix']
   feature:
-    increment: Minor
-    is-source-branch-for: ['pull-request']
-  fix:
-    regex: fix(es)?[/-]
-    increment: patch
-    source-branches: ['main']    
-    is-source-branch-for: ['pull-request']
+    tag: useBranchName
+  hotfix:
+    tag: useBranchName
   pull-request:
-    regex: ^(pull|pull\-requests|pr)[/-]
-    tag: PullRequest
-    increment: Inherit
-    source-branches: ['feature','fix']    
+    tag: rc  
 ignore:
   sha: []
 merge-message-formats: {}
