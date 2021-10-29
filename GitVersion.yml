@@ -1,24 +1,5 @@
-assembly-versioning-scheme: MajorMinorPatch
 mode: Mainline
-branches:
-  master:
-    regex: ^master$|^main$
-    tag: ''
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
-    is-mainline: true
-    is-source-branch-for: ['feature', 'hotfix']
-  feature:
-    tag: useBranchName    
-    increment: Minor
-  hotfix:
-    tag: useBranchName
-  pull-request:
-    tag: rc
-    increment: Minor
-    source-branches: ['feature','hotfix'] 
+branches: {}
 ignore:
   sha: []
 merge-message-formats: {}

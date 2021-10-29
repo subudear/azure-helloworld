@@ -1,5 +1,8 @@
 trigger:
 - main
+- develop
+- fix
+- feature
 
 jobs:
 - job: BuildAndTest
