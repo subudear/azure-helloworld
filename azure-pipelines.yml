@@ -1,7 +1,5 @@
 trigger:
-- main
-- feature
-- fix
+- master
 
 
 jobs:
