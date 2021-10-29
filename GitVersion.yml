@@ -13,6 +13,10 @@ branches:
     regex: fix(es)?[/-]
     increment: patch
     source-branches: ['main']
+  pull-request:
+    regex: ^(pull|pull\-requests|pr)[/-]
+    tag: PullRequest
+    increment: Inherit
 ignore:
   sha: []
 merge-message-formats: {}
