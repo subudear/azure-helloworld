@@ -16,7 +16,8 @@ branches:
   hotfix:
     tag: useBranchName
   pull-request:
-    tag: rc  
+    tag: rc
+    source-branches: ['feature','hotfix']  
 ignore:
   sha: []
 merge-message-formats: {}
