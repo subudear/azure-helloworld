@@ -1,5 +1,6 @@
 FROM golang:1.16 AS base
 
+
 ENV SWAGGER_VERSION=v0.27.0
 
 ENV download_url=https://github.com/go-swagger/go-swagger/releases/download/${SWAGGER_VERSION}/swagger_linux_amd64
