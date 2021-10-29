@@ -1,42 +1,24 @@
 assembly-versioning-scheme: MajorMinorPatch
 mode: Mainline
 branches:
-  breaking:
-    regex: breaking[/]
-    mode: ContinuousDeployment
-    increment: Major
-    source-branches: ['master']
+  master:
+    regex: ^master$|^main$
+    tag: ''
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    tracks-release-branches: false
     is-release-branch: false
+    is-mainline: true
+    is-source-branch-for: ['feature', 'hotfix']
   feature:
-    regex: feature[/]
-    mode: ContinuousDeployment
+    tag: useBranchName    
     increment: Minor
-    source-branches: ['master']
-    is-release-branch: false
-  bugfix:
-    regex: bugfix[/]
-    mode: ContinuousDeployment
-    increment: Patch
-    source-branches: ['master']
-    is-release-branch: false
-  refactor:
-    regex: refactor[/]
-    mode: ContinuousDeployment
-    increment: Patch
-    source-branches: ['master']
-    is-release-branch: false
-  ci:
-    regex: ci[/]
-    mode: ContinuousDeployment
-    increment: Patch
-    source-branches: ['master']
-    is-release-branch: false
-  ci:
-    regex: test[/]
-    mode: ContinuousDeployment
-    increment: Patch
-    source-branches: ['master']
-    is-release-branch: false
+  hotfix:
+    tag: useBranchName
+  pull-request:
+    tag: rc
+    increment: Minor
+    source-branches: ['feature','hotfix'] 
 ignore:
   sha: []
 merge-message-formats: {}
