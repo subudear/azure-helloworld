@@ -4,6 +4,8 @@ branches:
     tag: feature-{BranchName}    
   hotfix:
     tag: fix-{BranchName}
+  release:
+    tag: release
 ignore:
   sha: []
 merge-message-formats: {}
