@@ -17,6 +17,7 @@ branches:
     tag: useBranchName
   pull-request:
     tag: rc
+    increment: Inherit
     source-branches: ['feature','hotfix']  
 ignore:
   sha: []
