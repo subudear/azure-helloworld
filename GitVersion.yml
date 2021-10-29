@@ -11,7 +11,8 @@ branches:
     is-mainline: true
     is-source-branch-for: ['feature', 'hotfix']
   feature:
-    tag: useBranchName
+    tag: useBranchName    
+    increment: Minor
   hotfix:
     tag: useBranchName
   pull-request:
