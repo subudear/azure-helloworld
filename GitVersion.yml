@@ -9,14 +9,17 @@ branches:
     is-source-branch-for: ['feature', 'fix']
   feature:
     increment: Minor
+    is-source-branch-for: ['pull-request']
   fix:
     regex: fix(es)?[/-]
     increment: patch
-    source-branches: ['main']
+    source-branches: ['main']    
+    is-source-branch-for: ['pull-request']
   pull-request:
     regex: ^(pull|pull\-requests|pr)[/-]
     tag: PullRequest
     increment: Inherit
+    source-branches: ['feature','fix']    
 ignore:
   sha: []
 merge-message-formats: {}
