@@ -2,7 +2,8 @@ assembly-versioning-scheme: MajorMinorPatch
 mode: Mainline
 branches:
   master:
-    regex: ^main$
+    is-mainline: false
+  develop:
     tag: ""
     is-mainline: true
     increment: none
