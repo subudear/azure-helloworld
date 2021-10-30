@@ -1,7 +1,7 @@
 trigger:
 - main
-- bugfix
-- feature
+- bugfix*
+- feature*
 
 jobs:
 - job: BuildAndTest
