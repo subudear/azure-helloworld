@@ -6,6 +6,7 @@ branches:
     tag: fix-{BranchName}
   release:
     tag: release
+    mode: ContinuousDelivery
 ignore:
   sha: []
 merge-message-formats: {}
