@@ -2,9 +2,11 @@ mode: Mainline
 branches:
   feature:
     regex: ^feature?[/-]
+    source-branches: ['main','master'] 
     tag: feature-{BranchName}    
   fix:
     regex: bugfix(es)?[/-]
+    source-branches: ['main','master'] 
     tag: fix-{BranchName}
 ignore:
   sha: []
