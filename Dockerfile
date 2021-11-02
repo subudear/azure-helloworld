@@ -8,6 +8,7 @@ RUN chmod +x /usr/local/bin/swagger
 
 WORKDIR /go/src/app
 
+
 COPY ./health ./health
 COPY go.mod .
 COPY *.go .
