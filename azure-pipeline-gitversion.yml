@@ -1,6 +1,7 @@
 trigger:
 - main
 
+
 jobs:
 - job: BuildAndTest
   workspace:
