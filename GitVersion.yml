@@ -1,8 +1,10 @@
 mode: Mainline
 branches:
   feature:
+    regex: ^feature?[/-]
     tag: feature-{BranchName}    
-  hotfix:
+  fix:
+    regex: bugfix(es)?[/-]
     tag: fix-{BranchName}
 ignore:
   sha: []
