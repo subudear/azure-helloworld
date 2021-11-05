@@ -1,0 +1,8 @@
+resources:
+  repositories:
+    - repository: template
+      type: git 
+      name: commontemplate
+
+jobs:
+- template: common.yml@templates
