@@ -2,7 +2,7 @@ resources:
   repositories:
     - repository: template
       type: git 
-      name: commontemplate
+      name: template
 
 jobs:
 - template: common-template.yml@template
