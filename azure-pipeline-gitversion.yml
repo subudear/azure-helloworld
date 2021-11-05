@@ -1,7 +1,5 @@
 trigger:
 - master
-- features*
-- bugfixs*
 
 
 jobs:
