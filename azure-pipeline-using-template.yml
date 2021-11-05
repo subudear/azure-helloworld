@@ -5,4 +5,4 @@ resources:
       name: commontemplate
 
 jobs:
-- template: common.yml@templates
+- template: common-template.yml@template
