@@ -1,7 +1,5 @@
 trigger:
 - main
-- feature*
-- bugfix*
 
 resources:
   repositories:
