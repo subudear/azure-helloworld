@@ -1,1 +1,1 @@
-+semver: minor
+[+semver: minor]
