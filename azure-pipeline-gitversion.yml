@@ -1,7 +1,5 @@
 trigger:
 - master
-- feature*
-- bugfix*
 
 jobs:
 - job: BuildAndTest
