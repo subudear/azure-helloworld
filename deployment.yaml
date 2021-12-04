@@ -30,6 +30,8 @@ spec:
             memory: 512Mi
         securityContext:
           runAsUser: 1000
+        imagePullSecrets:
+        - name: aws-registry
           
           
           
