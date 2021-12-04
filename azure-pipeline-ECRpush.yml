@@ -50,7 +50,6 @@ stages:
         sourceImageTag: $(Build.BuildId)
         pushTag: $(Build.BuildId)
        repositoryName: $(AWS_ECR_REPOSITORY_NAME)
-
 - stage: Dev
   jobs:
   - deployment:
