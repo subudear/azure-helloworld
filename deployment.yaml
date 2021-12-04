@@ -1,15 +1,8 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: helloworld
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-deploy
-  namespace: helloworld
+  namespace: dev-cluster
   labels:
     app: hello-world-deploy
 spec:
@@ -48,7 +41,7 @@ metadata:
   labels:
     app: hello-world-svc
   name: hello-world-svc
-  namespace: helloworld
+  namespace: dev-cluster
 spec:
   ports:
   - name: helloworld
