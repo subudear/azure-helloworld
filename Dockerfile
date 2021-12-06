@@ -6,7 +6,7 @@ COPY ./health ./health
 COPY go.mod .
 COPY *.go .
 
-RUN go mod init
+#RUN go mod init
 
 RUN go build -o main .
 
