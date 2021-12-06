@@ -12,11 +12,11 @@ RUN go build -o main .
 
 
 #Build the container to run
-FROM alpine:3.13 AS Publish
+#FROM alpine:3.13 AS Publish
 
 #Copy compiled app from stage build
-COPY --from=base /go/src/app /app
+#COPY --from=base /go/src/app /app
 
 EXPOSE 8080
 
-ENTRYPOINT ["/app/main"]
+ENTRYPOINT ["/go/src/app/main"]
