@@ -60,4 +60,4 @@ stages:
        deploy:
          steps:
            - script: kubectl apply -f deployment.yaml
-             displayName: 'Dev deploy'
+             displayName: 'Dev Deploy'
