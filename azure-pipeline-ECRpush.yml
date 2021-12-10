@@ -54,7 +54,7 @@ stages:
   jobs:
   - deployment:
     displayName: Dev deploy
-    environment: devcluster
+    environment: dev
     strategy:
      runOnce:
        deploy:
