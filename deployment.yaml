@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: helloworldapp
-        image: 706949302588.dkr.ecr.ap-southeast-2.amazonaws.com/test-hello-world:latest
+        image: 706949302588.dkr.ecr.ap-southeast-2.amazonaws.com/test-hello-world:#{$(Build.BuildId)}#
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
