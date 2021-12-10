@@ -1,5 +1,5 @@
 trigger: 
- - main
+ - master
 
 pool:
    name: Self-Hosted-Agent
@@ -50,14 +50,3 @@ stages:
         sourceImageTag: $(Build.BuildId)
         pushTag: latest
         repositoryName: $(AWS_ECR_REPOSITORY_NAME)
-- stage: Dev
-  jobs:
-  - deployment:
-    displayName: Dev deploy
-    environment: dev
-    strategy:
-     runOnce:
-       deploy:
-         steps:
-           - script: kubectl apply -f deployment.yaml
-             displayName: 'Dev Deploy'
