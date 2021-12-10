@@ -8,7 +8,6 @@ variables:
   - group: dev
 stages:
 - stage: Build
-  dependsOn: [] # This will remove implicit dependency and run in parallel with the stage: Tests above 
   jobs:
   - job:
     displayName: Build the application
@@ -58,6 +57,7 @@ stages:
         pushTag: $(Build.BuildId)
         repositoryName: $(AWS_ECR_REPOSITORY_NAME)
 - stage: Dev
+  dependsOn: Build
   jobs:
   - deployment:
     displayName: Dev deploy
