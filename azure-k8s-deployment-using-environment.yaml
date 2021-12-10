@@ -1,5 +1,5 @@
 trigger: 
- - main
+ - master
 
 pool:
    name: Self-Hosted-Agent
@@ -24,6 +24,13 @@ stages:
       inputs:
         command: 'build'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      displayName: 'Replace image version in deployment.yaml'
+      inputs:
+        rootDirectory: '$(System.DefaultWorkingDirectory)'
+        targetFiles: 'deployment.yaml'
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
@@ -48,7 +55,7 @@ stages:
         imageSource: 'imagename'
         sourceImageName: $(AWS_ECR_MAGE_URI)
         sourceImageTag: $(Build.BuildId)
-        pushTag: latest
+        pushTag: $(Build.BuildId)
         repositoryName: $(AWS_ECR_REPOSITORY_NAME)
 - stage: Dev
   jobs:
