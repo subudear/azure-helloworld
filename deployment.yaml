@@ -32,6 +32,8 @@ spec:
         runAsUser: 999
       imagePullSecrets:
       - name: aws-registry
+      serviceAccountName: dev-cluster-svc
+      automountServiceAccountToken: false
           
           
           
