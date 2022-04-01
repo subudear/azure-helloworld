@@ -1,0 +1,105 @@
+trigger:
+- master
+
+
+jobs:
+- job: BuildAndTest
+  workspace:
+    clean: all
+  pool:
+    name: Self-Hosted-Agent
+
+  #container: avcosystems/golang-node:1.16
+  steps:
+
+  - task: gitversion/execute@0
+    inputs:
+      useConfigFile: true
+      configFilePath: './GitVersion.yml'
+  - task: Bash@3
+    inputs:
+      script: echo "##vso[build.updatebuildnumber]$(GitVersion.SemVer)"
+    displayName: 'Update build number'
+  - task: GoTool@0
+    inputs:
+      version: '1.17'
+  - task: Go@0
+    displayName: "Go Get"
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Build"
+    inputs:
+      command: 'build'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    displayName: "Go Test"
+    inputs:
+      command: 'test'
+      arguments: './...'
+  - task: CopyFiles@2
+    displayName: "Copy files to ArtifactStaging"
+    inputs:
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+       artifactName: drop
+
+- job: OnBuildHost
+  dependsOn: BuildAndTest
+  pool:
+    name: windows_agent  
+  steps:
+
+  - task: Docker@2
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Docker Build'
+    inputs:
+      containerRegistry: '$(dockerRegistryServiceConnection)'
+      repository: '$(imageRepository)'
+      command: 'build'
+      Dockerfile: '$(dockerfilePath)'
+      tags: '$(Build.BuildNumber)'    
+  - task: ArtifactoryToolsInstaller@1
+    displayName: "Install JFrog CLI"
+    inputs:
+      artifactoryService: 'BasicAuth-artifactory'
+      cliInstallationRepo: 'https://releases.jfrog.io/ui/native/jfrog-cli/v2/'
+  - task: ArtifactoryDocker@1
+    displayName: "Push to Artifactory"
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      command: 'push'
+      artifactoryService: '$(artifactoryServiceConnection)'
+      targetRepo: '$(targetRepo)'
+      imageName: '$(imageName):$(imageTag)'
+  - task: CopyFiles@2
+    displayName: "Copy Artifacts"
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'deployment.yaml'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/deploy.zip'
+      replaceExistingArchive: true
+     
+      
+  - task: S3Upload@1
+    inputs:
+      sourceFolder: '$(Build.ArtifactStagingDirectory)'
+      awsCredentials: 'aws_service'
+      regionName: 'ap-southeast-2'
+      bucketName: 'azuredevops2awss3upload'
+      globExpressions: 'deploy.zip'
+      createBucket: true
+      keyManagement: 'awsManaged'
+      encryptionAlgorithm: 'AES256'
+      logRequest: true
+      logResponse: true
