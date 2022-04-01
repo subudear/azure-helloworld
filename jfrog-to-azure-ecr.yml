@@ -78,8 +78,11 @@ jobs:
        echo Write your commands here
         docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
         echo Hello world
+
+
   - task: Docker@2
     inputs:
       containerRegistry: 'jfrog2azure'
-      repository: 'jfrog2azure.azurecr.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber)'
+      repository: 'jfrog2azure.azurecr.io/helloworldrepo-docker/helloworld'
       command: 'push'
+      tags: '$(Build.BuildNumber)'
