@@ -1,6 +1,8 @@
 trigger:
 - main
 
+variables:
+  - group: artifactory
 
 jobs:
 - job: BuildAndTest
