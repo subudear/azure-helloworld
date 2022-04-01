@@ -83,6 +83,6 @@ jobs:
   - task: Docker@2
     inputs:
       containerRegistry: 'jfrog2azure'
-      repository: 'jfrog2azure.azurecr.io/helloworldrepo-docker/helloworld'
+      repository: 'helloworldrepo-azure/helloworld'
       command: 'push'
       tags: '$(Build.BuildNumber)'
