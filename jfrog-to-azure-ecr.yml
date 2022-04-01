@@ -72,3 +72,14 @@ jobs:
       targetRepo: '$(targetRepo)'
       imageName: '$(imageName):$(imageTag)'
 
+  - task: CmdLine@2
+    inputs:
+     script: |
+       echo Write your commands here
+        docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
+        echo Hello world
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'jfrog2azure'
+      repository: 'helloworldrepo-azure'
+      command: 'push'
