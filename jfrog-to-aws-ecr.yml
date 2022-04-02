@@ -52,3 +52,11 @@ jobs:
         docker images jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld
 
 
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'aws_service'
+    regionName: 'ap-southeast-2'
+    imageSource: 'imagename'
+    sourceImageName: 'xcxc'
+    repositoryName: 'fdfd'
+    autoCreateRepository: true
