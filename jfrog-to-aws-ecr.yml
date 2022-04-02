@@ -49,7 +49,7 @@ jobs:
     inputs:
      script: |
        echo Tagging the image
-        docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
+        docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(AWS_ECR_REPOSITORY_NAME):$(Build.BuildNumber)
         docker images jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld
 
   - task: ECRPushImage@1
