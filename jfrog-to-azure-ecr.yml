@@ -72,15 +72,25 @@ jobs:
       targetRepo: '$(targetRepo)'
       imageName: '$(imageName):$(imageTag)'
 
+  - task: ArtifactoryDocker@1
+    displayName: "Pull image from Artifactory"
+    inputs:
+     command: 'pull'
+     artifactoryService: '$(artifactoryServiceConnection)'
+     sourceRepo: 'helloworldrepo-docker'
+     imageName: '$(imageName):$(imageTag)'
+
   - task: CmdLine@2
+    displayName: "Tag image for Azure Registry"
     inputs:
      script: |
-       echo Write your commands here
+       echo Tagging the image
         docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
-        echo Hello world
+        echo $(docker images)
 
 
   - task: Docker@2
+    displayName: "Push image to Azure Registry"
     inputs:
       containerRegistry: 'jfrog2azure'
       repository: 'helloworldrepo-azure/helloworld'
