@@ -51,12 +51,12 @@ jobs:
         docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
         docker images jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld
 
-
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'aws_service'
-    regionName: 'ap-southeast-2'
-    imageSource: 'imagename'
-    sourceImageName: 'xcxc'
-    repositoryName: 'fdfd'
-    autoCreateRepository: true
+  - task: ECRPushImage@1
+    inputs:
+      awsCredentials: 'AWS_Service'
+      regionName: '$(AWS_REGION)'
+      imageSource: 'imagename'
+      sourceImageName: $(AWS_ECR_MAGE_URI)
+      sourceImageTag: $(Build.BuildNumber)
+      pushTag: latest
+      repositoryName: $(AWS_ECR_REPOSITORY_NAME)
