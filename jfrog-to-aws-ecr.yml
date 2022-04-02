@@ -1,5 +1,5 @@
 trigger:
-- master
+- main
 
 variables:
   - group: artifactory
@@ -49,7 +49,7 @@ jobs:
     inputs:
      script: |
        echo Tagging the image
-        docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(AWS_ECR_MAGE_URI):$(Build.BuildNumber)
+       docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(AWS_ECR_MAGE_URI):$(Build.BuildNumber)
 
   - task: ECRPushImage@1
     inputs:
@@ -58,5 +58,7 @@ jobs:
       imageSource: 'imagename'
       sourceImageName: $(AWS_ECR_MAGE_URI)
       sourceImageTag: $(Build.BuildNumber)
-      pushTag: latest
+      pushTag: |
+        latest
+        $(Build.BuildNumber)
       repositoryName: $(AWS_ECR_REPOSITORY_NAME)
