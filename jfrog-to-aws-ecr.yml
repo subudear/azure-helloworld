@@ -1,0 +1,54 @@
+trigger:
+- master
+
+variables:
+  - group: artifactory
+
+jobs:
+- job: OnBuildHost
+  pool:
+    name: Self-Hosted-Agent  
+  steps:
+
+  - task: Docker@2
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Docker Build'
+    inputs:
+      containerRegistry: '$(artifactoryRegistryServiceConnection)'
+      repository: '$(imageRepository)'
+      command: 'build'
+      Dockerfile: '$(dockerfilePath)'
+      tags: '$(Build.BuildNumber)'    
+
+  - task: ArtifactoryToolsInstaller@1
+    displayName: "Install JFrog CLI"
+    inputs:
+      artifactoryService: 'BasicAuth-artifactory'
+      cliInstallationRepo: 'https://releases.jfrog.io/ui/native/jfrog-cli/v2/'
+
+  - task: ArtifactoryDocker@1
+    displayName: "Push image to Artifactory"
+    #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      command: 'push'
+      artifactoryService: '$(artifactoryServiceConnection)'
+      targetRepo: '$(targetRepo)'
+      imageName: '$(imageName):$(imageTag)'
+
+  - task: ArtifactoryDocker@1
+    displayName: "Pull image from Artifactory"
+    inputs:
+     command: 'pull'
+     artifactoryService: '$(artifactoryServiceConnection)'
+     sourceRepo: '$(sourceRepo)'
+     imageName: '$(imageName):$(imageTag)'
+
+  - task: CmdLine@2
+    displayName: "Tag image for Azure Registry"
+    inputs:
+     script: |
+       echo Tagging the image
+        docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
+        docker images jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld
+
+
