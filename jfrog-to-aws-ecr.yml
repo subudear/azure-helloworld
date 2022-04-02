@@ -58,7 +58,5 @@ jobs:
       imageSource: 'imagename'
       sourceImageName: $(AWS_ECR_MAGE_URI)
       sourceImageTag: $(Build.BuildNumber)
-      pushTag: |
-        latest
-        $(Build.BuildNumber)
+      pushTag: $(Build.BuildNumber)
       repositoryName: $(AWS_ECR_REPOSITORY_NAME)
