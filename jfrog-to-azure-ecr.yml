@@ -86,7 +86,7 @@ jobs:
      script: |
        echo Tagging the image
         docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
-        echo $(docker images)
+        docker images jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld
 
 
   - task: Docker@2
