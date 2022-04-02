@@ -4,7 +4,7 @@ trigger:
 variables:
   - group: artifactory
 
-
+jobs:
 - job: OnBuildHost
   pool:
     name: Self-Hosted-Agent  
