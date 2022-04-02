@@ -3,6 +3,7 @@ trigger:
 
 variables:
   - group: artifactory
+  - group: AWS
 
 jobs:
 - job: OnBuildHost
@@ -54,7 +55,7 @@ jobs:
   - task: ECRPushImage@1
     inputs:
       awsCredentials: 'AWS_Service'
-      regionName: '$(AWS_REGION)'
+      regionName: $(AWS_REGION)
       imageSource: 'imagename'
       sourceImageName: $(AWS_ECR_MAGE_URI)
       sourceImageTag: $(Build.BuildNumber)
