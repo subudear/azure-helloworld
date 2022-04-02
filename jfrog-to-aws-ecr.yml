@@ -44,12 +44,6 @@ jobs:
      sourceRepo: '$(sourceRepo)'
      imageName: '$(imageName):$(imageTag)'
 
-  - task: CmdLine@2
-    displayName: "Tag image for Azure Registry"
-    inputs:
-     script: |
-       echo Tagging the image
-       docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(AWS_ECR_MAGE_URI):$(Build.BuildNumber)
 
   - task: ECRPushImage@1
     inputs:
