@@ -4,47 +4,8 @@ trigger:
 variables:
   - group: artifactory
 
-jobs:
-- job: BuildAndTest
-  workspace:
-    clean: all
-  pool:
-    name: Self-Hosted-Agent
-
-  #container: avcosystems/golang-node:1.16
-  steps:
-
-
-  - task: GoTool@0
-    inputs:
-      version: '1.17'
-  - task: Go@0
-    displayName: "Go Get"
-    inputs:
-      command: 'get'
-      arguments: '-d'
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-  - task: Go@0
-    displayName: "Go Build"
-    inputs:
-      command: 'build'
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-  - task: Go@0
-    displayName: "Go Test"
-    inputs:
-      command: 'test'
-      arguments: './...'
-  - task: CopyFiles@2
-    displayName: "Copy files to ArtifactStaging"
-    inputs:
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact"
-    inputs:
-       artifactName: drop
 
 - job: OnBuildHost
-  dependsOn: BuildAndTest
   pool:
     name: Self-Hosted-Agent  
   steps:
@@ -53,18 +14,20 @@ jobs:
     #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: 'Docker Build'
     inputs:
-      containerRegistry: '$(dockerRegistryServiceConnection)'
+      containerRegistry: '$(artifactoryRegistryServiceConnection)'
       repository: '$(imageRepository)'
       command: 'build'
       Dockerfile: '$(dockerfilePath)'
       tags: '$(Build.BuildNumber)'    
+
   - task: ArtifactoryToolsInstaller@1
     displayName: "Install JFrog CLI"
     inputs:
       artifactoryService: 'BasicAuth-artifactory'
       cliInstallationRepo: 'https://releases.jfrog.io/ui/native/jfrog-cli/v2/'
+
   - task: ArtifactoryDocker@1
-    displayName: "Push to Artifactory"
+    displayName: "Push image to Artifactory"
     #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
       command: 'push'
@@ -77,7 +40,7 @@ jobs:
     inputs:
      command: 'pull'
      artifactoryService: '$(artifactoryServiceConnection)'
-     sourceRepo: 'helloworldrepo-docker'
+     sourceRepo: '$(sourceRepo)'
      imageName: '$(imageName):$(imageTag)'
 
   - task: CmdLine@2
@@ -87,7 +50,6 @@ jobs:
        echo Tagging the image
         docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld:$(Build.BuildNumber)
         docker images jfrog2azure.azurecr.io/helloworldrepo-azure/helloworld
-
 
   - task: Docker@2
     displayName: "Push image to Azure Registry"
