@@ -52,11 +52,23 @@ jobs:
        docker tag subudear.jfrog.io/helloworldrepo-docker/helloworld:$(Build.BuildNumber) $(AWS_ECR_MAGE_URI):$(Build.BuildNumber)
 
   - task: ECRPushImage@1
+    displayName: "Push image (Buildnumber) to AWS ECR"
     inputs:
       awsCredentials: 'AWS_Service'
       regionName: $(AWS_REGION)
       imageSource: 'imagename'
       sourceImageName: $(AWS_ECR_MAGE_URI)
       sourceImageTag: $(Build.BuildNumber)
-      pushTag: latest, $(Build.BuildNumber)
+      pushTag: $(Build.BuildNumber)
+      repositoryName: $(AWS_ECR_REPOSITORY_NAME)
+
+  - task: ECRPushImage@1
+    displayName: "Push image (latest) to AWS ECR"
+    inputs:
+      awsCredentials: 'AWS_Service'
+      regionName: $(AWS_REGION)
+      imageSource: 'imagename'
+      sourceImageName: $(AWS_ECR_MAGE_URI)
+      sourceImageTag: $(Build.BuildNumber)
+      pushTag: latest
       repositoryName: $(AWS_ECR_REPOSITORY_NAME)
