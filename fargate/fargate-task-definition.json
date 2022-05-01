@@ -1,0 +1,26 @@
+{
+  "family": "helloworldtask",
+  "networkMode": "awsvpc",
+  "containerDefinitions": [{
+    "name": "helloworld-app",
+    "image": "706949302588.dkr.ecr.ap-southeast-2.amazonaws.com/testworld:702",
+    "portMappings": [{
+      "containerPort": 80,
+      "hostPort": 80,
+      "protocol": "tcp"
+    }],
+    "essential": true,
+    "entryPoint": [
+      "sh",
+      "-c"
+    ],
+    "command": [
+      "/bin/sh -c \"echo 'hello from ecs fargate cluster' >  /usr/local/apache2/htdocs/index.html && httpd-foreground\""
+    ]
+  }],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512"
+}
