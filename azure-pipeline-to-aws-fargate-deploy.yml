@@ -60,9 +60,3 @@ stages:
         pushTag: $(Build.BuildId)
         repositoryName: $(AWS_ECR_REPOSITORY_NAME)
 
-    - task: AWSCLI@1
-      inputs:
-        awsCredentials: 'aws_service'
-        regionName: 'ap-southeast-2'
-        awsCommand: 'aws ecs register-task-definition  --cli-input-json file://$(Build.ArtifactStagingDirectory)/fargate/fargate-task-definition.json'
-
