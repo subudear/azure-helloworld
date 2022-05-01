@@ -50,3 +50,12 @@ stages:
         sourceImageTag: $(Build.BuildId)
         pushTag: $(Build.BuildId)
         repositoryName: $(AWS_ECR_REPOSITORY_NAME)
+
+    - task: AWSShellScript@1
+      inputs:
+        awsCredentials: 'aws_service'
+        regionName: 'ap-southeast-2'
+        scriptType: 'inline'
+        inlineScript: |
+          aws ecs register-task-definition \
+          --cli-input-json file://fargate/fargate-task-definition.json
