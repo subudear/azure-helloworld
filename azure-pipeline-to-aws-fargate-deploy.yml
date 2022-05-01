@@ -64,5 +64,5 @@ stages:
       inputs:
         awsCredentials: 'aws_service'
         regionName: 'ap-southeast-2'
-        awsCommand: 'aws ecs register-task-definition  --cli-input-json $(System.DefaultWorkingDirectory)/fargate/fargate-task-definition.json'
+        awsCommand: 'aws ecs register-task-definition  --cli-input-json file://$(System.DefaultWorkingDirectory)/fargate/fargate-task-definition.json'
 
