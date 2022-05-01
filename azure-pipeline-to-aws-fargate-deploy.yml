@@ -25,13 +25,14 @@ stages:
         command: 'build'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    - task: replacetokens@5
       displayName: 'Replace image version in deployment.yaml'
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/fargate'
         targetFiles: 'fargate-task-definition.json'
         tokenPrefix: '#{'
         tokenSuffix: '}#'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
