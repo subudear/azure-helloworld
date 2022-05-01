@@ -5,7 +5,7 @@ pool:
    name: Self-Hosted-Agent
 
 variables:
-  - group: dev
+  - group: AWS
 stages:
 - stage: Build
   dependsOn: [] # This will remove implicit dependency and run in parallel with the stage: Tests above 
