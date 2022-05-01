@@ -35,7 +35,7 @@ stages:
 
     - task: CopyFiles@2
       inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        SourceFolder: '$(System.DefaultWorkingDirectory)/fargate'
         Contents: 'fargate-task-definition.json'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishBuildArtifacts@1
@@ -64,5 +64,5 @@ stages:
       inputs:
         awsCredentials: 'aws_service'
         regionName: 'ap-southeast-2'
-        awsCommand: 'aws ecs register-task-definition  --cli-input-json file://$(System.DefaultWorkingDirectory)/fargate/fargate-task-definition.json'
+        awsCommand: 'aws ecs register-task-definition  --cli-input-json file://$(Build.ArtifactStagingDirectory)/fargate/fargate-task-definition.json'
 
