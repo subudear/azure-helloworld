@@ -58,4 +58,4 @@ stages:
         scriptType: 'inline'
         inlineScript: |
           aws ecs register-task-definition \
-          --cli-input-json file://fargate/fargate-task-definition.json
+          --cli-input-json $(System.DefaultWorkingDirectory)/fargate/fargate-task-definition.json
