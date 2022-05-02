@@ -1,7 +1,7 @@
 {
   "family": "helloworldtask",
   "networkMode": "awsvpc",
-  "executionRoleArn": "AmazonECSTaskExecutionRolePolicy",
+  "executionRoleArn": "ecsTaskExecutionRole",
   "containerDefinitions": [{
     "name": "helloworld-app",
     "image": "706949302588.dkr.ecr.ap-southeast-2.amazonaws.com/testworld:#{Build.BuildId}#",
