@@ -30,8 +30,10 @@ stages:
     - task: replacetokens@5
       displayName: 'Replace image version in deployment.yaml'
       inputs:
-        rootDirectory: '$(System.DefaultWorkingDirectory)/*.*'
-        targetFiles: '*.*'
+        rootDirectory: '$(System.DefaultWorkingDirectory)'
+        targetFiles: |
+          **/fargate/*.json
+          **/hello-world.go
         tokenPrefix: '#{'
         tokenSuffix: '}#'
 
