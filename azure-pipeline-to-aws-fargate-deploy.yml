@@ -28,8 +28,8 @@ stages:
     - task: replacetokens@5
       displayName: 'Replace image version in deployment.yaml'
       inputs:
-        rootDirectory: '$(System.DefaultWorkingDirectory)/fargate'
-        targetFiles: 'fargate-task-definition.json'
+        rootDirectory: '$(System.DefaultWorkingDirectory)'
+        targetFiles: '*.*'
         tokenPrefix: '#{'
         tokenSuffix: '}#'
 
