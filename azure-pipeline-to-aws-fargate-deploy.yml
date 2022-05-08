@@ -30,7 +30,7 @@ stages:
     - task: replacetokens@5
       displayName: 'Replace image version in deployment.yaml'
       inputs:
-        rootDirectory: '$(System.DefaultWorkingDirectory)/**'
+        rootDirectory: '$(System.DefaultWorkingDirectory)/*.*'
         targetFiles: '*.*'
         tokenPrefix: '#{'
         tokenSuffix: '}#'
