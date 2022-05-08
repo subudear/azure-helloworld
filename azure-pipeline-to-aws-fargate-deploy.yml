@@ -11,6 +11,8 @@ stages:
   dependsOn: [] # This will remove implicit dependency and run in parallel with the stage: Tests above 
   jobs:
   - job:
+    workspace:
+      clean: all
     displayName: Build the application
     steps: 
     - task: Go@0
